@@ -6,13 +6,13 @@ import {MiToken} from "../src/MiToken.sol"; // Asegúrate de que apunte al nombr
 
 contract MiTokenTest is Test {
     MiToken public token;
-    
+
     // Creamos dos direcciones ficticias de prueba
     address public creador = address(0x1);
     address public usuarioA = address(0x2);
-    
+
     // Definimos 1,000 tokens iniciales considerando los 18 decimales (en Wei)
-    uint256 public suministroInicial = 1000 * 10**18;
+    uint256 public suministroInicial = 1000 * 10 ** 18;
 
     // Se ejecuta de manera automática antes de CADA test
     function setUp() public {
@@ -29,7 +29,7 @@ contract MiTokenTest is Test {
 
     // 2. Validar que la función estándar transfer funcione correctamente
     function test_TransferirTokens() public {
-        uint256 montoAEnviar = 150 * 10**18;
+        uint256 montoAEnviar = 150 * 10 ** 18;
 
         // El creador hace la transferencia hacia el usuarioA
         vm.prank(creador);
