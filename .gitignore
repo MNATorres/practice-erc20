@@ -2,6 +2,9 @@
 cache/
 out/
 
+# Dependency directories
+node_modules/
+
 # Commonly ignored directories
 .logs/
 .ignore/
@@ -18,3 +21,24 @@ docs/
 .env
 .env.*
 !.env.example
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
