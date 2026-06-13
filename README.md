@@ -2,6 +2,76 @@
 
 Este es un proyecto de práctica diseñado para aprender y experimentar con el desarrollo de Smart Contracts (estándar ERC20) utilizando **Solidity** y **Foundry**, así como la interacción y lectura de datos desde la Blockchain a través de **TypeScript** y **Viem**.
 
+## 🗺️ Arquitectura del Proyecto y Flujo de Trabajo
+
+El siguiente diagrama detalla la arquitectura del proyecto, la interacción entre componentes y el flujo de ejecución completo:
+
+```mermaid
+flowchart TB
+    %% Estilos de Nodos
+    classDef contract fill:#e8d7ff,stroke:#7c3aed,stroke-width:2px;
+    classDef tool fill:#d1e9ff,stroke:#1d4ed8,stroke-width:1px;
+    classDef blockchain fill:#ffe4e6,stroke:#be123c,stroke-width:2px;
+    classDef client fill:#d1fae5,stroke:#047857,stroke-width:1px;
+    classDef config fill:#f3f4f6,stroke:#4b5563,stroke-width:1px,stroke-dasharray: 5 5;
+
+    subgraph Foundry ["🛠️ Entorno de Desarrollo Solidity (Foundry)"]
+        direction TB
+        A["MiToken.sol (Contrato Inteligente ERC20)"]:::contract -->|Hereda de| OZ["@openzeppelin/contracts (Estándar ERC20)"]:::config
+        
+        B["MiToken.t.sol (Pruebas Unitarias de Forge)"]:::contract -->|Prueba e Inyecta contexto| A
+        
+        C["forge test (Ejecutor de Tests)"]:::tool -->|Ejecuta y valida| B
+        D["forge build (Compilador Solidity)"]:::tool -->|Genera ABIs y Bytecode| Out["Carpeta out/ (Artifacts de Compilación)"]:::config
+        
+        E["MiToken.s.sol (Script de Despliegue)"]:::contract -->|Instancia con suministroInicial| A
+    end
+
+    subgraph Blockchain ["🌐 Red Blockchain Local (Anvil)"]
+        direction TB
+        AnvilNode["Nodo Local Anvil (http://127.0.0.1:8545)"]:::blockchain
+        Accounts["Cuentas de Prueba de Anvil"]:::blockchain
+        DeployedContract["Contrato Desplegado (MiToken en Anvil)"]:::blockchain
+        
+        AnvilNode --> Accounts
+        AnvilNode --> DeployedContract
+    end
+
+    subgraph Client ["💻 Scripts TypeScript (Viem)"]
+        direction TB
+        PublicClient["createPublicClient (Cliente Viem)"]:::client
+        
+        TS_Balance["leerBalance.ts (Script para Balance de Ether)"]:::client
+        TS_Token["leerToken.ts (Script para Balance de Token)"]:::client
+        
+        ABI_Fragment["erc20AbiBasic (Fragmento ABI de ERC20)"]:::config
+    end
+
+    %% Flujos de Ejecución y Comunicación
+    E -->|1. Despliegue: forge script --broadcast| AnvilNode
+    AnvilNode -->|Genera y despliega| DeployedContract
+    
+    TS_Balance -->|2. Obtiene balance de cuenta| PublicClient
+    PublicClient -->|3. Consulta saldo de cuenta (getBalance)| AnvilNode
+    AnvilNode -->|4. Retorna balance en Wei| PublicClient
+    PublicClient -->|5. Formatea a Ether (formatEther)| TS_Balance
+    
+    TS_Token -->|6. Lee datos del contrato (decimals, balanceOf)| PublicClient
+    TS_Token -.->|Usa definición de interfaz| ABI_Fragment
+    PublicClient -->|7. Consulta estado del contrato| DeployedContract
+    DeployedContract -->|8. Retorna valores del balance| PublicClient
+    PublicClient -->|9. Formatea unidades (formatUnits)| TS_Token
+
+    %% Asignación de Clases
+    class A,B,E contract;
+    class C,D tool;
+    class AnvilNode,Accounts,DeployedContract blockchain;
+    class PublicClient,TS_Balance,TS_Token client;
+    class OZ,Out,ABI_Fragment config;
+```
+
+---
+
 ## 🛠️ Tecnologías y Herramientas
 
 *   **Smart Contracts:** Solidity (^0.8.20) y OpenZeppelin Contracts.
