@@ -9,11 +9,11 @@ El siguiente diagrama detalla la arquitectura del proyecto, la interacción entr
 ```mermaid
 flowchart TB
     %% Estilos de Nodos
-    classDef contract fill:#e8d7ff,stroke:#7c3aed,stroke-width:2px;
-    classDef tool fill:#d1e9ff,stroke:#1d4ed8,stroke-width:1px;
-    classDef blockchain fill:#ffe4e6,stroke:#be123c,stroke-width:2px;
-    classDef client fill:#d1fae5,stroke:#047857,stroke-width:1px;
-    classDef config fill:#f3f4f6,stroke:#4b5563,stroke-width:1px,stroke-dasharray: 5 5;
+    classDef contract fill:#e8d7ff,stroke:#7c3aed,stroke-width:2px,color:#111;
+    classDef tool fill:#d1e9ff,stroke:#1d4ed8,stroke-width:1px,color:#111;
+    classDef blockchain fill:#ffe4e6,stroke:#be123c,stroke-width:2px,color:#111;
+    classDef client fill:#d1fae5,stroke:#047857,stroke-width:1px,color:#111;
+    classDef config fill:#f3f4f6,stroke:#4b5563,stroke-width:1px,stroke-dasharray: 5 5,color:#111;
 
     subgraph Foundry ["🛠️ Entorno de Desarrollo Solidity (Foundry)"]
         direction TB
