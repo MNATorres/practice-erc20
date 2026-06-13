@@ -52,15 +52,15 @@ flowchart TB
     AnvilNode -->|Genera y despliega| DeployedContract
     
     TS_Balance -->|2. Obtiene balance de cuenta| PublicClient
-    PublicClient -->|3. Consulta saldo de cuenta (getBalance)| AnvilNode
+    PublicClient -->|3. Consulta saldo de cuenta con getBalance| AnvilNode
     AnvilNode -->|4. Retorna balance en Wei| PublicClient
-    PublicClient -->|5. Formatea a Ether (formatEther)| TS_Balance
+    PublicClient -->|5. Formatea a Ether con formatEther| TS_Balance
     
-    TS_Token -->|6. Lee datos del contrato (decimals, balanceOf)| PublicClient
+    TS_Token -->|6. Lee decimals y balanceOf del contrato| PublicClient
     TS_Token -.->|Usa definición de interfaz| ABI_Fragment
     PublicClient -->|7. Consulta estado del contrato| DeployedContract
     DeployedContract -->|8. Retorna valores del balance| PublicClient
-    PublicClient -->|9. Formatea unidades (formatUnits)| TS_Token
+    PublicClient -->|9. Formatea unidades con formatUnits| TS_Token
 
     %% Asignación de Clases
     class A,B,E contract;
