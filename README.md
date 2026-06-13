@@ -135,7 +135,7 @@ git submodule update --init --recursive
 2.  **Desplegar el Smart Contract en Anvil:**
     Abre una nueva terminal y ejecuta el script de despliegue usando una de las llaves privadas generadas por Anvil:
     ```shell
-    forge script script/MiToken.s.sol:MiTokenScript --rpc-url http://127.0.0.1:8545 --broadcast --private-key 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+    forge script script/MiToken.s.sol:MiTokenScript --rpc-url http://127.0.0.1:8545 --broadcast --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
     ```
 
 ### 4. Ejecutar los Scripts de TypeScript (Viem)
