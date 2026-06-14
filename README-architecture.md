@@ -36,8 +36,8 @@ flowchart TB
     %% Flows
     A -->|Source Code| D
     E -->|Deploys Bytecode via RPC| B
-    F -->|JSON-RPC queries & txs| B
-    B -->|Returns BigInt (Wei) / Tx Receipt| F
+    F -->|JSON-RPC queries and txs| B
+    B -->|Returns BigInt and Tx Receipt| F
 
     %% Styles
     classDef contract fill:#e8d7ff,stroke:#7c3aed,stroke-width:2px,color:#000;
