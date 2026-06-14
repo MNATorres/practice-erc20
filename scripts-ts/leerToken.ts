@@ -1,17 +1,18 @@
+import "dotenv/config";
 import { createPublicClient, http, formatUnits } from "viem";
 import { mainnet } from "viem/chains";
 
 // 1. Configuración del cliente conectado a tu nodo local de Anvil
 const client = createPublicClient({
   chain: mainnet,
-  transport: http("http://127.0.0.1:8545"),
+  transport: http(process.env.RPC_URL || "http://127.0.0.1:8545"),
 });
 
-// 2. La dirección real del contrato que te acaba de dar la terminal
-const CONTRATO_TOKEN = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+// 2. La dirección real del contrato
+const CONTRATO_TOKEN = (process.env.CONTRATO_TOKEN || "0x5FbDB2315678afecb367f032d93F642f64180aa3") as `0x${string}`;
 
 // 3. La dirección de la Cuenta #0 (quien firmó el despliegue con su clave privada)
-const CUENTA_DUEÑA = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+const CUENTA_DUEÑA = (process.env.CUENTA_DUEÑA || "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") as `0x${string}`;
 
 // 4. El "Fragmento de ABI" para indicarle a Viem cómo hablar con el estándar ERC20
 const erc20AbiBasic = [

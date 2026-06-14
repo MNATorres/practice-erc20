@@ -1,10 +1,11 @@
+import "dotenv/config";
 import { createPublicClient, http, formatEther } from "viem";
 import { mainnet } from "viem/chains";
 
 // 1. Creamos el cliente público (el puente/lente que mira hacia la Blockchain)
 const client = createPublicClient({
   chain: mainnet, // Usamos la configuración base de mainnet para tipos de datos
-  transport: http("http://127.0.0.1:8545"), // Apunta directo al puerto donde corre tu Anvil
+  transport: http(process.env.RPC_URL || "http://127.0.0.1:8545"), // Apunta directo al puerto donde corre tu Anvil
 });
 
 async function main() {
@@ -14,8 +15,8 @@ async function main() {
   const blockNumber = await client.getBlockNumber();
   console.log(`🚀 ¡Conexión exitosa! Bloque actual en Anvil: #${blockNumber}`);
 
-  // 3. Tomamos la primera dirección pública que te arrojó Anvil al encenderlo
-  const direccionPrueba = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+  // 3. Tomamos la dirección pública configurada o la de prueba
+  const direccionPrueba = (process.env.CUENTA_DUEÑA || "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266") as `0x${string}`;
 
   // 4. Leemos su balance de Ether nativo (la respuesta viene como un número gigante: bigint)
   const balanceWei = await client.getBalance({ address: direccionPrueba });
