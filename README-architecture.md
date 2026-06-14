@@ -2,7 +2,53 @@
 
 When building a Web3 application, the architecture is divided into two major worlds that must learn to communicate: the **Blockchain World (Immutable Backend)** and the **Traditional World (Frontend/Off-chain Scripts)**.
 
-Here is the breakdown of what has been built, organized by layers:
+Here is a visual map of how these components connect:
+
+```mermaid
+flowchart TB
+    %% Nodes
+    subgraph Layer1 ["🏢 Layer 1: Immutable Solidity (On-Chain)"]
+        direction TB
+        A["MiToken.sol (ERC20 Contract)"]:::contract
+    end
+
+    subgraph Layer2 ["🏭 Layer 2: Blockchain Node / Simulator (Anvil)"]
+        direction TB
+        B["Anvil EVM Node (http://127.0.0.1:8545)"]:::node
+        C["Deployed Contract & Test Accounts"]:::node
+        B --> C
+    end
+
+    subgraph Bridge ["🚀 Deployment Bridge"]
+        direction TB
+        D["MiToken.s.sol (Foundry Script)"]:::bridge
+        E["forge script --broadcast"]:::bridge
+        D --> E
+    end
+
+    subgraph Layer3 ["🌐 Layer 3: External App (TypeScript & Viem)"]
+        direction TB
+        F["Viem Public & Wallet Clients"]:::viem
+        G["scripts-ts/ (leerBalance, leerToken, transferToken)"]:::viem
+        G --> F
+    end
+
+    %% Flows
+    A -->|Source Code| D
+    E -->|Deploys Bytecode via RPC| B
+    F -->|JSON-RPC queries & txs| B
+    B -->|Returns BigInt (Wei) / Tx Receipt| F
+
+    %% Styles
+    classDef contract fill:#e8d7ff,stroke:#7c3aed,stroke-width:2px,color:#000;
+    classDef node fill:#ffe4e6,stroke:#be123c,stroke-width:2px,color:#000;
+    classDef bridge fill:#d1e9ff,stroke:#1d4ed8,stroke-width:2px,color:#000;
+    classDef viem fill:#d1fae5,stroke:#047857,stroke-width:2px,color:#000;
+```
+
+---
+
+Here is the detailed breakdown of what has been built, organized by layers:
 
 ---
 
